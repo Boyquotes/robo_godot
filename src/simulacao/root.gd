@@ -30,5 +30,6 @@ func _on_http_request_request_completed(result, response_code, headers, body):
 	print(robot_position.z / 100 * 0.516)
 	$arm.scale = Vector2(robot_position.z / 100 * 0.516 , robot_position.z / 100 * 0.835)
 	$arm.position = Vector2(532, 546)
-	$arm/tip.rotation = robot_position.r / 100 * 2 * PI
+	print(atan2(robot_position.x, 100 - robot_position.y))
+	$arm/tip.rotation = atan2(robot_position.x, 100 - robot_position.y)
 	print(robot_position)
