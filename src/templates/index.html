@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <form action="/api/position">
+    <form>
         <label for="x">x: </label><br>
         <input type="number" id="x" name="x"><br>
         <label for="y">y: </label><br>
@@ -26,8 +26,33 @@
         <input type="number" id="j3" name="j3"><br>
         <label for="j4">j4: </label><br>
         <input type="number" id="j4" name="j4"><br>
-        <input type="submit" value="Enviar">
+        <button type="button" value="Enviar" onclick="submitData()">Enviar</button>
     </form>
+
+    <script>
+        async function submitData() {
+            event.preventDefault()
+            const response = await fetch('http://10.254.18.44:5000/api/position', {
+                method: 'POST',
+                body: JSON.stringify({
+                    x: document.getElementById('x').value,
+                    y: document.getElementById('y').value,
+                    z: document.getElementById('z').value,
+                    r: document.getElementById('r').value,
+                    j1: document.getElementById('j1').value,
+                    j2: document.getElementById('j2').value,
+                    j3: document.getElementById('j3').value,
+                    j4: document.getElementById('j4').value
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const responseJson = await response.json();
+            console.log(responseJson); // logs 'OK'
+            
+        }
+    </script>
 </body>
 
 </html>

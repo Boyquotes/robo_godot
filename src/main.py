@@ -11,7 +11,7 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/api/positions') # Rota API
+@app.route('/api/position', methods=['GET']) # Rota API
 def api_positions():
     # Retorna uma lista com os jogos cadastrados no banco de dados
     return {
@@ -30,17 +30,16 @@ def api_position_last():
 
 @app.route('/api/position', methods=['POST']) # Rota API
 def api_position_post():
-    print(request.form)
     # Cria um novo jogo no banco de dados
     position = Position(
-        x=request.form['x'],
-        y=request.form['y'],
-        z=request.form['z'],
-        r=request.form['r'],
-        j1=request.form['j1'],
-        j2=request.form['j2'],
-        j3=request.form['j3'],
-        j4=request.form['j4']
+        x=request.json['x'],
+        y=request.json['y'],
+        z=request.json['z'],
+        r=request.json['r'],
+        j1=request.json['j1'],
+        j2=request.json['j2'],
+        j3=request.json['j3'],
+        j4=request.json['j4']
     )
     db.session.add(position)
     db.session.commit()
@@ -72,4 +71,4 @@ def api_position_delete(id):
 
 # Inicia o servidor web
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)
