@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controlar robô</title>
+</head>
+
+<body>
+    <form>
+        <label for="x">x: </label><br>
+        <input type="number" id="x" name="x"><br>
+        <label for="y">y: </label><br>
+        <input type="number" id="y" name="y"><br>
+        <label for="z">z: </label><br>
+        <input type="number" id="z" name="z"><br>
+        <label for="r">r: </label><br>
+        <input type="number" id="r" name="r"><br>
+        <label for="j1">j1: </label><br>
+        <input type="number" id="j1" name="j1"><br>
+        <label for="j2">j2: </label><br>
+        <input type="number" id="j2" name="j2"><br>
+        <label for="j3">j3: </label><br>
+        <input type="number" id="j3" name="j3"><br>
+        <label for="j4">j4: </label><br>
+        <input type="number" id="j4" name="j4"><br>
+        <button type="button" value="Enviar" onclick="submitData()">Enviar</button>
+    </form>
+
+    <script>
+        async function submitData() {
+            event.preventDefault()
+            console.log('POST')
+            const response = await fetch('http://127.0.0.1:5000/api/position', {
+                method: 'POST',
+                body: JSON.stringify({
+                    x: document.getElementById('x').value,
+                    y: document.getElementById('y').value,
+                    z: document.getElementById('z').value,
+                    r: document.getElementById('r').value,
+                    j1: document.getElementById('j1').value,
+                    j2: document.getElementById('j2').value,
+                    j3: document.getElementById('j3').value,
+                    j4: document.getElementById('j4').value
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const responseJson = await response.json();
+            console.log(responseJson); // logs 'OK'
+            document.getElementById('x').value = ''
+            document.getElementById('y').value = ''
+            document.getElementById('z').value = ''
+            document.getElementById('r').value = ''
+            document.getElementById('j1').value = ''
+            document.getElementById('j2').value = ''
+            document.getElementById('j3').value = ''
+            document.getElementById('j4').value = ''
+        }
+    </script>
+</body>
+
+</html>
