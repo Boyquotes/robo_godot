@@ -1,8 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://dl2npgvgagqel"]
+[gd_scene load_steps=4 format=3 uid="uid://dl2npgvgagqel"]
 
 [ext_resource type="Script" path="res://root.gd" id="1_co1mt"]
+[ext_resource type="Texture2D" uid="uid://xgiuqoi6hla1" path="res://robot_arm.png" id="2_af5xf"]
+[ext_resource type="Texture2D" uid="uid://c5rm88hv85tkv" path="res://icon.svg" id="3_txd13"]
 
 [node name="root" type="Node2D"]
+position = Vector2(43, 25)
 script = ExtResource("1_co1mt")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
@@ -34,7 +37,7 @@ text = "R:"
 [node name="z" type="RichTextLabel" parent="."]
 offset_left = 9.0
 offset_top = 64.0
-offset_right = 49.0
+offset_right = 108.0
 offset_bottom = 104.0
 text = "Z: "
 
@@ -65,6 +68,19 @@ offset_top = 244.0
 offset_right = 43.0
 offset_bottom = 284.0
 text = "J4:"
+
+[node name="arm" type="Sprite2D" parent="."]
+position = Vector2(533, 549)
+scale = Vector2(0.516071, 0.835305)
+texture = ExtResource("2_af5xf")
+centered = false
+offset = Vector2(-140, -650)
+flip_h = true
+
+[node name="tip" type="Sprite2D" parent="arm"]
+position = Vector2(-1.93762, -573.443)
+scale = Vector2(2.70977, 1.65546)
+texture = ExtResource("3_txd13")
 
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

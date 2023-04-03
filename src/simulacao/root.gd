@@ -18,7 +18,7 @@ func _on_timer_timeout():
 func _on_http_request_request_completed(result, response_code, headers, body):
 	var json = JSON.new()
 	json.parse(body.get_string_from_utf8())
-	var robot_position = json.get_data()
+	robot_position = json.get_data()
 	$x.text = "x: " + str(robot_position['x'])
 	$y.text = "y: " + str(robot_position['y'])
 	$z.text = "z: " + str(robot_position['z'])
@@ -27,4 +27,8 @@ func _on_http_request_request_completed(result, response_code, headers, body):
 	$j2.text = "j2: " + str(robot_position['j2'])
 	$j3.text = "j3: " + str(robot_position['j3'])
 	$j4.text = "j4: " + str(robot_position['j4'])
+	print(robot_position.z / 100 * 0.516)
+	$arm.scale = Vector2(robot_position.z / 100 * 0.516 , robot_position.z / 100 * 0.835)
+	$arm.position = Vector2(532, 546)
+	$arm/tip.rotation = robot_position.r / 100 * 2 * PI
 	print(robot_position)

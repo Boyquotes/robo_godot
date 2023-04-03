@@ -3,9 +3,11 @@
 from src.config import db # Conexão com banco de dados
 from src.models.Position import Position # Modelo de tabela de jogos
 from flask import Flask, render_template, request # Framework web
+from flask_cors import CORS
 
 # Cria o servidor web
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/') # Rota inicial
 def index():
