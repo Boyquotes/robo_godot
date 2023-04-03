@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
+
+.container {
+    display: flex;
+    gap: 100px;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    font-family: 'DM Sans';
+}
+
+/* Add some padding to the table cells */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    padding: 8px;
+}
+
+/* Add a border to the table and alternate background colors for rows */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Style the table header */
+th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+/* Add hover effect on rows */
+tr:hover {
+    background-color: #ddd;
+}
+
+/* Set the width of the first column to be narrower */
+td:first-child {
+    width: 20%;
+}
+
+/* Style the form container */
+form {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+/* Style the form input fields and labels */
+.form-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+label {
+    flex: 1;
+    margin-right: 10px;
+}
+
+input[type="number"] {
+    flex: 2;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+}
+
+/* Style the form button */
+button[type="button"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'DM Sans';
+    font-weight: bold;
+}
+
+button[type="button"]:hover {
+    background-color: #3e8e41;
+}
