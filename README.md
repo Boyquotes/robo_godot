@@ -26,7 +26,7 @@ Acesse o frontend no link http://127.0.0.1:5000/
 ### Documentação da API
 As rotas da API para comunicação com o banco de dados se encontram no caminho http://127.0.0.1:5000/api/.
 
-A documentação completa está descrita nesta coleção do Postman: 
+A documentação completa está descrita nesta coleção do Postman: https://documenter.getpostman.com/view/23245053/2s93RWPr7t
 
 ## Simulação
 1. Faça o download do software Godot na versão 3.
