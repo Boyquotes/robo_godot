@@ -10,5 +10,61 @@ script = ExtResource("1_co1mt")
 [node name="Timer" type="Timer" parent="."]
 autostart = true
 
+[node name="x" type="RichTextLabel" parent="."]
+offset_left = 6.0
+offset_top = 1.0
+offset_right = 46.0
+offset_bottom = 41.0
+text = "X: "
+
+[node name="y" type="RichTextLabel" parent="."]
+offset_left = 9.0
+offset_top = 33.0
+offset_right = 49.0
+offset_bottom = 73.0
+text = "Y:"
+
+[node name="r" type="RichTextLabel" parent="."]
+offset_left = 3.0
+offset_top = 92.0
+offset_right = 43.0
+offset_bottom = 132.0
+text = "R:"
+
+[node name="z" type="RichTextLabel" parent="."]
+offset_left = 9.0
+offset_top = 64.0
+offset_right = 49.0
+offset_bottom = 104.0
+text = "Z: "
+
+[node name="j1" type="RichTextLabel" parent="."]
+offset_left = 6.0
+offset_top = 130.0
+offset_right = 47.0
+offset_bottom = 172.0
+text = "J1: "
+
+[node name="j2" type="RichTextLabel" parent="."]
+offset_left = 5.0
+offset_top = 167.0
+offset_right = 45.0
+offset_bottom = 207.0
+text = "J2:"
+
+[node name="j3" type="RichTextLabel" parent="."]
+offset_left = 4.0
+offset_top = 205.0
+offset_right = 44.0
+offset_bottom = 245.0
+text = "J3:"
+
+[node name="j4" type="RichTextLabel" parent="."]
+offset_left = 3.0
+offset_top = 244.0
+offset_right = 43.0
+offset_bottom = 284.0
+text = "J4:"
+
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

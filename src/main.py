@@ -18,12 +18,12 @@ def api_positions():
         'positions': [position.return_json() for position in db.session.query(Position).all()]
     }
 
-@app.route('/api/positions/<int:id>') # Rota API
+@app.route('/api/position/<int:id>') # Rota API
 def api_position(id):
     # Retorna um jogo específico cadastrado no banco de dados
     return db.session.query(Position).filter(Position.id == id).first().return_json()
 
-@app.route('/api/positions/last') # Rota API
+@app.route('/api/position/last') # Rota API
 def api_position_last():
     # Retorna o último jogo cadastrado no banco de dados
     return db.session.query(Position).order_by(Position.id.desc()).first().return_json()
