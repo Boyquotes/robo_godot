@@ -1,4 +1,4 @@
-from backend.models.Base import Base # Classe base para criar as tabelas
+from src.models.Base import Base # Classe base para criar as tabelas
 from sqlalchemy import Column, Integer, Float # Para criar as colunas da tabela
 
 # Classe que representa a tabela de jogos

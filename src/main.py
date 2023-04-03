@@ -1,7 +1,7 @@
 # Programa principal que mostra os jogos cadastrados no banco de dados no console, numa rota API e na página inicial do site
 
-from backend.config import db # Conexão com banco de dados
-from backend.models.Position import Position # Modelo de tabela de jogos
+from src.config import db # Conexão com banco de dados
+from src.models.Position import Position # Modelo de tabela de jogos
 from flask import Flask, render_template, request # Framework web
 
 # Cria o servidor web
@@ -30,16 +30,17 @@ def api_position_last():
 
 @app.route('/api/position', methods=['POST']) # Rota API
 def api_position_post():
+    print(request.form)
     # Cria um novo jogo no banco de dados
     position = Position(
-        x=request.json['x'],
-        y=request.json['y'],
-        z=request.json['z'],
-        r=request.json['r'],
-        j1=request.json['j1'],
-        j2=request.json['j2'],
-        j3=request.json['j3'],
-        j4=request.json['j4']
+        x=request.form['x'],
+        y=request.form['y'],
+        z=request.form['z'],
+        r=request.form['r'],
+        j1=request.form['j1'],
+        j2=request.form['j2'],
+        j3=request.form['j3'],
+        j4=request.form['j4']
     )
     db.session.add(position)
     db.session.commit()
