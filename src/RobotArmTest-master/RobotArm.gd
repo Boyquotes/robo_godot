@@ -24,9 +24,12 @@ var is_x_gizmo_under_mouse = false
 var is_x_gizmo_dragged = false
 var is_ik_enabled = true
 
-var x_target = 50
-var y_target = 50
-var z = 50
+var last_pose = {'g':90, 'wa':90, 'wr':90, 'x':100, 'y':100, 'z':100}
+var pose_changed = false
+
+var x_target = 100
+var y_target = 100
+var z = 100
 
 var timer = false
 var playing = false
@@ -55,6 +58,9 @@ func _process(delta):
 		x_label.text = str(int(x_target))
 		y_label.text = str(int(y_target))
 		z_label.text = str(int(z))
+	if pose_changed:
+		move_robot()
+		pose_changed = false
 	
 func _unhandled_input(event):
 	
@@ -163,27 +169,10 @@ func _on_XGizmo_mouse_exited():
 	is_x_gizmo_under_mouse = false
 #	print("XGizmo Exit")
 
-# ADD pose
-func _on_Button_pressed():
-	var new_pose = {"x": 100,"y": 100,"z": 90,"g": 90,"wa": 90,"wr": 90}
-	new_pose.x = x_target
-	new_pose.y = y_target
-	new_pose.z = z
-	if pose_selected == Data.poses.pose.size():
-		Data.poses.pose.append(new_pose)
-	else:
-		Data.poses.pose.insert(pose_selected + 1, new_pose)
-	pose_selected = pose_selected + 1
-	#pose_editor.load_data()
-	#pose_editor.select(pose_selected)
-#	print("Added new pose")
-#	print("Num poses:",poses.pose.size())
-
 # PLAY
-func _on_Button2_pressed():
+func move_robot():
 	playing = true
-	var poses = [{'g':90, 'wa':90, 'wr':90, 'x':100, 'y':100, 'z':90},
-	{'g':90, 'wa':90, 'wr':90, 'x':50, 'y':100, 'z':90}] 
+	var poses = [last_pose]
 	print(Data.poses.pose)
 	for i in poses.size():
 		if poses[i].has_all(mandatory_keys):
@@ -204,29 +193,9 @@ func _on_Button2_pressed():
 	playing = false
 	pose_selected = Data.poses.pose.size()-1
 	#pose_editor.select(pose_selected)
-
-# SAVE button
-func _on_Button4_pressed():
-	$HUD/FileDialog.set_mode(FileDialog.MODE_SAVE_FILE)
-	$HUD/FileDialog.show_modal(true)
 	
-# LOAD button
-func _on_Button3_pressed():
-	$HUD/FileDialog.set_mode(FileDialog.MODE_OPEN_FILE)
-	$HUD/FileDialog.show_modal(true)
 
-func _on_FileDialog_file_selected(path):
-	if $HUD/FileDialog.get_mode() == FileDialog.MODE_OPEN_FILE:
-		print("Loading...")
-		print(path)
-		Data.poses = FileAccess.load(path)
-		pose_selected = Data.poses.pose.size()
-#		print(Data.poses)
-		pose_editor.load_data()
-	elif $HUD/FileDialog.get_mode() == FileDialog.MODE_SAVE_FILE:
-		print("Saving...")
-		print(path)
-		FileAccess.save(Data.poses, path)
+
 
 func _on_Timer_timeout():
 	timer = true
@@ -237,3 +206,16 @@ func _on_ItemList_item_selected(index):
 		y_target = Data.poses.pose[index].y
 		z = Data.poses.pose[index].z
 		pose_selected = index
+
+
+func _on_HTTPRequest_request_completed(result, response_code, headers, body):
+	var json = JSON.parse(body.get_string_from_utf8())
+	print(json.result)
+	if(last_pose.x != json.result.x or last_pose.y != json.result.y or last_pose.z != json.result.z):
+		last_pose.x = json.result.x
+		last_pose.y = json.result.y
+		last_pose.z = json.result.z
+		pose_changed = true
+
+func _on_requestTimer_timeout():
+	$HTTPRequest.request('http://127.0.0.1:5000/api/position/last')

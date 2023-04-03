@@ -149,10 +149,12 @@ visible = false
 [node name="EasingZ" type="Tween" parent="."]
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.05
 autostart = true
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="requestTimer" type="Timer" parent="."]
+autostart = true
 
 [connection signal="mouse_entered" from="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/BaseGizmo" to="." method="_on_BaseGizmo_mouse_entered"]
 [connection signal="mouse_exited" from="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/BaseGizmo" to="." method="_on_BaseGizmo_mouse_exited"]
@@ -168,5 +170,6 @@ autostart = true
 [connection signal="pressed" from="HUD/PosePanel/MarginContainer/HBoxContainer/Button2" to="." method="_on_Button2_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
+[connection signal="timeout" from="requestTimer" to="." method="_on_requestTimer_timeout"]
 
 [editable path="HUD"]
