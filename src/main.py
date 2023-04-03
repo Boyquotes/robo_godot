@@ -1,7 +1,7 @@
 # Programa principal que mostra os jogos cadastrados no banco de dados no console, numa rota API e na página inicial do site
 
-from src.config import db # Conexão com banco de dados
-from src.models.Position import Position # Modelo de tabela de jogos
+from config import db # Conexão com banco de dados
+from models.Position import Position # Modelo de tabela de jogos
 from flask import Flask, render_template, request # Framework web
 from flask_cors import CORS
 
