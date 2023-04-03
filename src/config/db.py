@@ -6,7 +6,7 @@ from models.Base import Base # Classe base para criar as tabelas
 from models.Position import Position 
 
 # Cria conexão com o banco de dados db.db
-engine = create_engine('sqlite:///db.db')
+engine = create_engine('sqlite:///app.db')
 
 # Cria sessão com o banco de dados
 Session = sessionmaker(bind=engine)
