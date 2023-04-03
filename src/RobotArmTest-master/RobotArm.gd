@@ -10,6 +10,11 @@ onready var base_gizmo = get_node("Armature/002-Shoulder2/Spatial/003-Arm2/Spati
 onready var x_label = get_node("HUD/CoordPanel/XTitle/XValue")
 onready var y_label = get_node("HUD/CoordPanel/YTitle/YValue")
 onready var z_label = get_node("HUD/CoordPanel/ZTitle/ZValue")
+onready var r_label = get_node("HUD/CoordPanel/rTitle/rValue")
+onready var j1_label = get_node("HUD/CoordPanel/j1Title/j1Value")
+onready var j2_label = get_node("HUD/CoordPanel/j2Title/j2Value")
+onready var j3_label = get_node("HUD/CoordPanel/j3Title/j3Value")
+onready var j4_label = get_node("HUD/CoordPanel/j4Title/j4Value")
 onready var easingx = get_node("EasingX")
 onready var easingy = get_node("EasingY")
 onready var easingz = get_node("EasingZ")
@@ -26,6 +31,7 @@ var is_ik_enabled = true
 
 var last_pose = {'g':90, 'wa':90, 'wr':90, 'x':100, 'y':100, 'z':100}
 var pose_changed = false
+var extra_coordinates = {'r': 0, 'j1': 0, 'j2': 0, 'j3': 0, 'j4': 0}
 
 var x_target = 100
 var y_target = 100
@@ -58,6 +64,13 @@ func _process(delta):
 		x_label.text = str(int(x_target))
 		y_label.text = str(int(y_target))
 		z_label.text = str(int(z))
+		r_label.text = str(int(extra_coordinates.r))
+		j1_label.text = str(int(extra_coordinates.j1))
+		j2_label.text = str(int(extra_coordinates.j2))
+		j3_label.text = str(int(extra_coordinates.j3))
+		j4_label.text = str(int(extra_coordinates.j4))
+		
+		
 	if pose_changed:
 		move_robot()
 		pose_changed = false
@@ -210,7 +223,11 @@ func _on_ItemList_item_selected(index):
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
-	print(json.result)
+	extra_coordinates.r = json.result.r
+	extra_coordinates.j1 = json.result.j1
+	extra_coordinates.j2 = json.result.j2
+	extra_coordinates.j3 = json.result.j3
+	extra_coordinates.j4 = json.result.j4
 	if(last_pose.x != json.result.x or last_pose.y != json.result.y or last_pose.z != json.result.z):
 		last_pose.x = json.result.x
 		last_pose.y = json.result.y
