@@ -1,38 +1,38 @@
-# Programa principal que mostra os jogos cadastrados no banco de dados no console, numa rota API e na página inicial do site
+# Servidor 
 
 from config import db # Conexão com banco de dados
-from models.Position import Position # Modelo de tabela de jogos
+from models.Position import Position # Modelo de posições
 from flask import Flask, render_template, request # Framework web
-from flask_cors import CORS
+from flask_cors import CORS # Permite acesso de outros domínios
 
 # Cria o servidor web
 app = Flask(__name__)
-CORS(app)
+CORS(app) 
 
-@app.route('/') # Rota inicial
+@app.route('/') # Rota inicial do servidor, retorna a página index.html
 def index():
     return render_template('index.html')
 
-@app.route('/api/position', methods=['GET']) # Rota API
+# Retorna todas as posições cadastradas no banco de dados em uma lista de objetos json
+@app.route('/api/position', methods=['GET'])
 def api_positions():
-    # Retorna uma lista com os jogos cadastrados no banco de dados
     return {
         'positions': [position.return_json() for position in db.session.query(Position).all()]
     }
 
-@app.route('/api/position/<int:id>') # Rota API
+# Retorna uma posição específica cadastrada no banco de dados em um objeto json
+@app.route('/api/position/<int:id>') 
 def api_position(id):
-    # Retorna um jogo específico cadastrado no banco de dados
     return db.session.query(Position).filter(Position.id == id).first().return_json()
 
-@app.route('/api/position/last') # Rota API
+# Retorna a última posição cadastrada no banco de dados em um objeto json
+@app.route('/api/position/last') 
 def api_position_last():
-    # Retorna o último jogo cadastrado no banco de dados
     return db.session.query(Position).order_by(Position.id.desc()).first().return_json()
 
-@app.route('/api/position', methods=['POST']) # Rota API
+# Adciona uma nova posição no banco de dados
+@app.route('/api/position', methods=['POST']) 
 def api_position_post():
-    # Cria um novo jogo no banco de dados
     position = Position(
         x=request.json['x'],
         y=request.json['y'],
@@ -47,10 +47,9 @@ def api_position_post():
     db.session.commit()
     return position.return_json()
 
-
+# Atualiza uma posição no banco de dados
 @app.route('/api/position/<int:id>', methods=['PUT']) # Rota API
 def api_position_put(id):
-    # Atualiza um jogo no banco de dados
     position = db.session.query(Position).filter(Position.id == id).first()
     position.x = request.json['x']
     position.y = request.json['y']
@@ -63,9 +62,9 @@ def api_position_put(id):
     db.session.commit()
     return position.return_json()
 
+# Deleta uma posição no banco de dados
 @app.route('/api/position/<int:id>', methods=['DELETE']) # Rota API
 def api_position_delete(id):
-    # Deleta um jogo no banco de dados
     position = db.session.query(Position).filter(Position.id == id).first()
     db.session.delete(position)
     db.session.commit()
@@ -73,4 +72,4 @@ def api_position_delete(id):
 
 # Inicia o servidor web
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", debug=True) # Roda também na rede local

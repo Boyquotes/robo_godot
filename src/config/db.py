@@ -1,4 +1,4 @@
-# Script para criar conexão com banco de dados, criando o banco e as tabelas se eles não exisisrem
+# Script para criar conexão com banco de dados, criando o banco e as tabelas se eles não existirem
 
 from sqlalchemy.orm import sessionmaker # Para criar sessão com o banco de dados
 from sqlalchemy import create_engine # Para criar conexão com o banco de dados

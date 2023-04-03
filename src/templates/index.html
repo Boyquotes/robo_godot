@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <!-- Formulário para enviar os dados -->
     <form>
         <label for="x">x: </label><br>
         <input type="number" id="x" name="x"><br>
@@ -31,8 +32,9 @@
 
     <script>
         async function submitData() {
-            event.preventDefault()
-            console.log('POST')
+            event.preventDefault() // Evita que a página seja recarregada
+
+            // Envia os dados do formulário para o servidor em JSON
             const response = await fetch('http://127.0.0.1:5000/api/position', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -50,7 +52,9 @@
                 }
             });
             const responseJson = await response.json();
-            console.log(responseJson); // logs 'OK'
+            console.log(responseJson); // Exibe o resultado no console
+
+            // Limpa os campos do formulário
             document.getElementById('x').value = ''
             document.getElementById('y').value = ''
             document.getElementById('z').value = ''
