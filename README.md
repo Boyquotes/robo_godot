@@ -23,14 +23,20 @@ python3 main.py
 
 Acesse o frontend no link http://127.0.0.1:5000/
 
-### Documentação da API
+#### Documentação da API
 As rotas da API para comunicação com o banco de dados se encontram no caminho http://127.0.0.1:5000/api/.
 
 A documentação completa está descrita nesta coleção do Postman: https://documenter.getpostman.com/view/23245053/2s93RWPr7t
 
-## Simulação
+### Simulação
 1. Faça o download do software Godot na versão 3.
 2. Importe o arquivo 'project.godot' disponível no caminho src/simulacao
 3. Execute a simulação clicando no botão de play, no canto superior direito da interface do Godot
 
 Agora, ao enviar novas coordenadas pelo frontend, o objeto 3D da simulação se movimentará de acordo.
+
+## Lógica do programa
+
+Quando o usuário envia coordenadas pelo frontend, um JSON é gerado com os atributos x, y, z, r, j1, j2, j3, j4. Esse JSON é encaminhado para o servidor, que o salva no banco de dados em SQLite. Ao mesmo tempo, o Javascript da página faz requisições regulares (de 1 em 1 segundo) para a rota de API que retorna todas as posições salvas no banco. O resultado dessa requisição é utilizado para alimentar a tabela.
+
+Paralelamente, a simulação em Godot também faz requisições regulares (1 em 1 segundo) para a rota que retorna a última posição adicionada. Quando a posição retornada é diferente da última posição assumida pelo robô, o programa movimenta o objeto 3D para a nova posição através de uma série de interpolações para estimar os pontos intermediários. Nesse caso, considera-se apenas as coordenadas x, y e z, de modo que os valores das juntas são inferidos através de uma função de cinemática inversa. As outras coordenadas (r, j1, j2, j3, j4) apenas aparecem na interface do Godot, mas não influenciam no movimento em si.
